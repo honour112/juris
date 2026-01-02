@@ -1,20 +1,27 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Article } from '../types';
-import { MOCK_ARTICLES, SAMPLE_PDF } from '../constants';
+
 
 interface ArticleContextType {
   articles: Article[];
   addArticle: (article: Article) => void;
+  updateArticle: (article: Article) => void;
   deleteArticle: (id: string) => void;
 }
 
 const ArticleContext = createContext<ArticleContextType | undefined>(undefined);
 
 export const ArticleProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [articles, setArticles] = useState<Article[]>(MOCK_ARTICLES);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   const addArticle = (article: Article) => {
     setArticles((prev) => [article, ...prev]);
+  };
+
+  const updateArticle = (updatedArticle: Article) => {
+    setArticles((prev) => 
+      prev.map((a) => (a.id === updatedArticle.id ? updatedArticle : a))
+    );
   };
 
   const deleteArticle = (id: string) => {
@@ -22,7 +29,7 @@ export const ArticleProvider: React.FC<{ children: ReactNode }> = ({ children })
   };
 
   return (
-    <ArticleContext.Provider value={{ articles, addArticle, deleteArticle }}>
+    <ArticleContext.Provider value={{ articles, addArticle, updateArticle, deleteArticle }}>
       {children}
     </ArticleContext.Provider>
   );

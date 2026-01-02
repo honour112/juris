@@ -6,9 +6,13 @@ export interface Article {
   excerpt: { en: string; fr: string };
   category: string;
   date: string;
+  edition: string; // e.g. "Vol. 12 - Jan 2024"
   imageUrl: string;
   readTime: string;
   pdfUrl?: string;
+  status: 'published' | 'pending' | 'rejected';
+  author: string;
+  pdf_path?: string;
 }
 
 export interface LawyerProfile {
