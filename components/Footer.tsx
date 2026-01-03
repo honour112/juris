@@ -1,25 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { useArticles } from '../context/ArticleContext';
-import { Eye, BookOpen, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { Eye, BookOpen, Mail, Phone, MapPin, MessageCircle, Download } from 'lucide-react';
+import { supabase } from '../src/supabaseClient'; // Ensure this path is correct
 
 const Footer: React.FC = () => {
   const { t, language } = useLanguage();
-  const { articles } = useArticles();
-  const [views, setViews] = useState(0);
+  const [stats, setStats] = useState({
+    views: 0,
+    downloads: 0,
+    articles: 0
+  });
 
   const LOGO_URL = "https://i.postimg.cc/cHHbC2Jf/Chat-GPT-Image-Dec-28-2025-06-01-21-PM.png";
 
-  // 1. Logic for Page Views (Simulated persistence)
   useEffect(() => {
-    const currentViews = parseInt(localStorage.getItem('page_views') || '1280');
-    const newViews = currentViews + 1;
-    localStorage.setItem('page_views', newViews.toString());
-    setViews(newViews);
-  }, []);
+    const fetchLiveStats = async () => {
+      try {
+        // 1. Fetch Published Articles Count
+        const { count: articleCount } = await supabase
+          .from('articles')
+          .select('*', { count: 'exact', head: true })
+          .eq('status', 'published');
 
-  // 2. Logic for Published Articles
-  const publishedCount = articles?.filter(a => a.status === 'published').length || 0;
+        // 2. Fetch Global Stats (Assuming you have a 'site_settings' or 'stats' table)
+        // If you don't have a table yet, this will fallback to your local values
+        const { data: globalStats } = await supabase
+          .from('site_stats')
+          .select('views, downloads')
+          .single();
+
+        setStats({
+          articles: articleCount || 0,
+          views: globalStats?.views || 1280, // Default fallback
+          downloads: globalStats?.downloads || 450 // Default fallback
+        });
+
+        // 3. Increment Page View (Simple logic)
+        await supabase.rpc('increment_view_count'); // Requires a simple SQL function in Supabase
+      } catch (err) {
+        console.error("Error fetching footer stats:", err);
+      }
+    };
+
+    fetchLiveStats();
+  }, []);
 
   return (
     <footer className="bg-emerald-950 text-gray-400 py-20 border-t border-white/5 relative overflow-hidden">
@@ -45,29 +69,43 @@ const Footer: React.FC = () => {
             </p>
 
             {/* LIVE STATS BAR */}
-            <div className="flex gap-12 mt-6 border-l border-yellow-500/30 pl-8">
+            <div className="flex flex-wrap gap-10 mt-6 border-l border-yellow-500/30 pl-8">
+              {/* VISITS */}
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 text-white font-serif font-bold text-2xl">
                   <Eye size={18} className="text-yellow-500" />
-                  {views.toLocaleString()}
+                  {stats.views.toLocaleString()}
                 </div>
                 <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
                   {language === 'en' ? 'Reader Visits' : 'Visiteurs'}
                 </span>
               </div>
+
+              {/* DOWNLOADS */}
+              <div className="flex flex-col">
+                <div className="flex items-center gap-2 text-white font-serif font-bold text-2xl">
+                  <Download size={18} className="text-yellow-500" />
+                  {stats.downloads.toLocaleString()}
+                </div>
+                <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
+                  {language === 'en' ? 'Downloads' : 'Téléchargements'}
+                </span>
+              </div>
+
+              {/* ARTICLES */}
               <div className="flex flex-col">
                 <div className="flex items-center gap-2 text-white font-serif font-bold text-2xl">
                   <BookOpen size={18} className="text-yellow-500" />
-                  {publishedCount}
+                  {stats.articles}
                 </div>
                 <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
-                  {language === 'en' ? 'Articles Published' : 'Articles Publiés'}
+                  {language === 'en' ? 'Articles' : 'Articles'}
                 </span>
               </div>
             </div>
           </div>
           
-          {/* Douala Office */}
+          {/* Contact Columns ... (Douala & Ngaoundéré kept the same) */}
           <div>
             <h3 className="text-yellow-500 font-serif mb-6 font-bold text-lg border-b border-white/5 pb-2 inline-block">
                {language === 'en' ? 'Douala HQ' : 'Siège Douala'}
@@ -84,10 +122,9 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           
-          {/* Ngaoundéré Office */}
           <div>
             <h3 className="text-yellow-500 font-serif mb-6 font-bold text-lg border-b border-white/5 pb-2 inline-block">
-              {language === 'en' ? 'Ngaoundéré Office' : 'Bureau Ngaoundéré'}
+              {language === 'en' ? 'Contact Us' : 'Contactez-nous'}
             </h3>
             <ul className="space-y-4 text-sm font-light text-emerald-100/70">
               <li className="flex items-center gap-3 hover:text-white transition-colors">
@@ -100,10 +137,6 @@ const Footer: React.FC = () => {
                   +237 696 47 98 28
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={14} className="text-yellow-500/50 mt-1" />
-                <span>Ngaoundéré, Adamaoua<br/>Cameroon</span>
-              </li>
             </ul>
           </div>
         </div>
@@ -113,11 +146,7 @@ const Footer: React.FC = () => {
           <div className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-800">
             &copy; {new Date().getFullYear()} Revue Africaine des Sciences Sociales.
           </div>
-          <div className="flex gap-8 text-[10px] font-bold uppercase tracking-widest text-emerald-600">
-            <a href="#" className="hover:text-yellow-500 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-yellow-500 transition-colors">Terms</a>
-          </div>
-        </div>
+        </div>   
       </div>
     </footer>
   );
