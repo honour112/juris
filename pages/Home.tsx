@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, BookOpen, Shield, Users, Building, Send, Sparkles, FileCheck, Globe } from 'lucide-react';
+import { ArrowRight, BookOpen, Shield, Users, Building, Send, Sparkles, FileCheck, Globe, BarChart2, Gavel, GraduationCap, MapPin, MessageSquare } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useArticles } from '../context/ArticleContext';
 
@@ -101,7 +101,7 @@ const Home: React.FC = () => {
             </div>
             <div className="md:col-span-5 relative">
                <div className="aspect-[4/5] bg-emerald-950 rounded-sm overflow-hidden shadow-2xl rotate-3 group">
-                 <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" alt="Legacy" className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-[2s]"/>
+                 <img src="https://i.postimg.cc/br5pw9Fn/IMG-20260114-WA0099.jpg" alt="Legacy" className="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform duration-[2s]"/>
                  <div className="absolute inset-0 bg-gradient-to-t from-emerald-950 to-transparent"></div>
                  <div className="absolute bottom-10 left-10 right-10">
                     <p className="text-white font-serif italic text-lg leading-snug">"Dedicated to the intellectual sovereignty of the African continent."</p>
@@ -112,28 +112,103 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Grid Features */}
+      {/* Client Preferred Disciplines Section - With Icons and Explanations */}
       <section className="py-32 bg-emerald-950 relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+          <div className="absolute top-10 left-10 text-[20rem] font-serif font-bold text-white leading-none select-none">RASS</div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-1px bg-white/5 border border-white/10 shadow-2xl">
-             {[
-              { icon: BookOpen, label: t('socialSciences'), desc: "Exploration des structures sociétales contemporaines." },
-              { icon: Building, label: t('politicalScience'), desc: "Analyse des systèmes de gouvernance africains." },
-              { icon: Shield, label: t('juridicalLaw'), desc: "Étude des cadres législatifs et jurisprudentiels." },
-              { icon: Users, label: t('anthropology'), desc: "Recherches sur l'évolution culturelle du continent." },
+          <div className="text-center mb-20">
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6">
+              {language === 'en' ? 'Our Key Research Disciplines' : 'Nos Principales Disciplines de Recherche'}
+            </h2>
+            <div className="w-24 h-1 bg-yellow-500 mx-auto"></div>
+          </div>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            {[
+              { 
+                fr: "Sociologie", en: "Sociology", icon: Users, 
+                desc_fr: "Étude des dynamiques et structures sociales.", 
+                desc_en: "Study of social dynamics and structures." 
+              },
+              { 
+                fr: "Anthropologie", en: "Anthropology", icon: Globe, 
+                desc_fr: "Analyse des cultures et de l'évolution humaine.", 
+                desc_en: "Analysis of cultures and human evolution." 
+              },
+              { 
+                fr: "Science Politique", en: "Political Science", icon: Shield, 
+                desc_fr: "Examen des systèmes de pouvoir et gouvernance.", 
+                desc_en: "Examination of power systems and governance." 
+              },
+              { 
+                fr: "Économie", en: "Economics", icon: BarChart2, 
+                desc_fr: "Compréhension des marchés et des ressources.", 
+                desc_en: "Understanding markets and resources." 
+              },
+              { 
+                fr: "Histoire", en: "History", icon: BookOpen, 
+                desc_fr: "Reconstruction et interprétation du passé.", 
+                desc_en: "Reconstruction and interpretation of the past." 
+              },
+              { 
+                fr: "Géographie", en: "Geography", icon: MapPin, // Replaced Building with MapPin for Geography
+                desc_fr: "Étude des espaces, territoires et environnements.", 
+                desc_en: "Study of spaces, territories, and environments." 
+              },
+              { 
+                fr: "Sciences de l’Éducation", en: "Education Sciences", icon: GraduationCap, 
+                desc_fr: "Analyse des processus d'apprentissage et d'enseignement.", 
+                desc_en: "Analysis of learning and teaching processes." 
+              },
+              { 
+                fr: "Droit", en: "Law", icon: Gavel, // Use Gavel icon for Law
+                desc_fr: "Exploration des systèmes juridiques et de la justice.", 
+                desc_en: "Exploration of legal systems and justice." 
+              },
+              { 
+                fr: "Science de la Communication", en: "Communication Science", icon: MessageSquare, 
+                desc_fr: "Décryptage des flux d'information et médias.", 
+                desc_en: "Deciphering information flows and media." 
+              },
             ].map((item, idx) => (
-              <div key={idx} className="p-12 bg-emerald-950 hover:bg-emerald-900 transition-colors duration-500 flex flex-col items-center text-center group">
-                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-yellow-500 mb-8 group-hover:scale-110 group-hover:bg-yellow-500 group-hover:text-emerald-950 transition-all duration-500">
-                    <item.icon size={28} />
-                 </div>
-                 <h4 className="text-xl font-serif font-bold text-white mb-4 tracking-wide">{item.label}</h4>
-                 <p className="text-emerald-100/40 text-sm font-light leading-relaxed">{item.desc}</p>
+              <div 
+                key={idx} 
+                className="group px-8 py-10 bg-white/5 border border-white/10 backdrop-blur-sm hover:bg-yellow-500 transition-all duration-500 flex-grow basis-[calc(33%-1rem)] min-w-[280px] flex flex-col items-center justify-center text-center cursor-default hover:shadow-xl relative overflow-hidden"
+              >
+                {/* Animated Icon */}
+                <div className="w-16 h-16 rounded-full bg-emerald-700/50 flex items-center justify-center text-yellow-300 mb-6 group-hover:bg-emerald-950 group-hover:text-yellow-500 transition-all duration-500 group-hover:scale-110 group-hover:-translate-y-2">
+                  <item.icon size={28} />
+                </div>
+
+                <span className="text-yellow-500 text-[10px] font-black tracking-[.3em] uppercase mb-2 group-hover:text-emerald-950 transition-colors opacity-70">
+                  DISCIPLINE {idx + 1}
+                </span>
+                <h4 className="text-2xl font-serif font-bold text-white group-hover:text-emerald-950 transition-colors duration-500 mb-3">
+                  {language === 'en' ? item.en : item.fr}
+                </h4>
+                <p className="text-emerald-100/60 text-sm font-light leading-relaxed group-hover:text-emerald-950 transition-colors">
+                  {language === 'en' ? item.desc_en : item.desc_fr}
+                </p>
+                {/* Small animated line on hover */}
+                <div className="mt-6 w-0 group-hover:w-16 h-px bg-emerald-950/40 transition-all duration-500"></div>
               </div>
             ))}
+            
+            {/* CTA Card to invite more disciplines */}
+            <div className="px-8 py-10 bg-emerald-900/40 border border-emerald-500/20 flex-grow basis-[calc(33%-1rem)] min-w-[280px] flex flex-col items-center justify-center text-center italic">
+              <p className="text-emerald-100/40 text-sm">
+                {language === 'en' 
+                  ? "& other Social Science branches, you may suggest yours upon submission." 
+                  : "& autres branches des Sciences Sociales, vous pouvez suggérer la vôtre lors de la soumission."}
+              </p>
+            </div>
           </div>
         </div>
       </section>
-
       {/* Latest Edition Section */}
       <section className="py-40 bg-gray-50 border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
