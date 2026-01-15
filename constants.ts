@@ -12,7 +12,7 @@ export const TRANSLATIONS: Translation = {
 
   // General / Hero
   heroTitle: { en: 'African Social Sciences Review', fr: 'Revue Africaine des Sciences Sociales' },
-  heroSubtitle: { en: 'The premier monthly journal for legal, political, and social analysis in Central Africa.', fr: 'La première revue mensuelle d\'analyse juridique, politique et sociale en Afrique Centrale.' },
+  heroSubtitle: { en: 'A monthly review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue mensuelle d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
   heroCta: { en: 'Read Current Edition', fr: 'Lire l\'Édition Actuelle' },
   issnLabel: { en: 'Monthly Journal • ISSN 2304-xxxx', fr: 'Revue Mensuelle • ISSN 2304-xxxx' },
   
