@@ -19,8 +19,8 @@ export const TRANSLATIONS: Translation = {
   // Home Page
   aboutFirm: { en: 'Scientific Rigor & Local Insight', fr: 'Rigueur Scientifique & Ancrage Local' },
   aboutFirmText: { 
-    en: 'Published monthly, the Review brings together academics, legal practitioners, and sociologists to dissect the dynamics shaping our societies. From Douala to the wider CEMAC region, we provide a platform for intellectual discourse.',
-    fr: 'Publiée mensuellement, la Revue rassemble universitaires, praticiens du droit et sociologues pour décortiquer les dynamiques qui façonnent nos sociétés. De Douala à la région CEMAC, nous offrons une tribune pour le discours intellectuel.'
+    en: 'Published monthly, the Review brings together academics and practitioners to analyze the dynamics shaping our societies',
+    fr: 'Publiée mensuellement, la Revue rassemble universitaires et praticiens pour analyser les dynamiques façonnant nos sociétés. '
   },
   socialSciences: { en: 'Social Sciences', fr: 'Sciences Sociales' },
   politicalScience: { en: 'Political Science', fr: 'Sciences Politiques' },
