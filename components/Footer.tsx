@@ -11,8 +11,7 @@ const Footer: React.FC = () => {
     articles: 0
   });
 
-  const LOGO_URL = "https://i.postimg.cc/cHHbC2Jf/Chat-GPT-Image-Dec-28-2025-06-01-21-PM.png";
-
+  const LOGO_URL = "https://i.postimg.cc/br5pw9Fn/IMG-20260114-WA0099.jpg"
   useEffect(() => {
     const fetchLiveStats = async () => {
       try {
