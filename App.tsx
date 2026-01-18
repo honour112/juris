@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -15,7 +15,7 @@ import { ArticleProvider } from './context/ArticleContext';
 // 1. Public Layout: Standard view with Navbar and Footer
 const PublicLayout = () => (
   <div className="flex flex-col min-h-screen">
-    <Navbar /> 
+    <Navbar />
     <main className="flex-grow">
       <Outlet />
     </main>
@@ -40,8 +40,8 @@ const App: React.FC = () => {
       <ArticleProvider>
         <Router>
           <Routes>
-            
-            {/* GROUP 1: PUBLIC PAGES (Linked in Navbar) */}
+
+            {/* GROUP 1: PUBLIC PAGES */}
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/articles" element={<Articles />} />
@@ -50,12 +50,11 @@ const App: React.FC = () => {
             </Route>
 
             {/* GROUP 2: HIDDEN ADMIN PORTAL */}
-            {/* Accessible only by typing: yoursite.com/#/admin */}
             <Route element={<AdminLayout />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
 
-            {/* CATCH-ALL: Redirects any typos back to Home */}
+            {/* CATCH-ALL */}
             <Route path="*" element={<Navigate to="/" replace />} />
 
           </Routes>
