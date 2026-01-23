@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Corrected to match your non-www domain
-Sitemap: https://revueafricainedessciencessociales.com/sitemap.xml
+# Point Google to your official WWW sitemap
+Sitemap: https://www.revueafricainedessciencessociales.com/sitemap.xml
