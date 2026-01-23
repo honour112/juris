@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # Point Google to your official WWW sitemap
-Sitemap: https://revueafricainedessciencessociales.com/sitemap.xml
+Sitemap: https://revueafricainedessciencesociales.com/sitemap.xml
