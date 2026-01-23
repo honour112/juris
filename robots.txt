@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
-Disallow: /admin  # Prevent Google from showing your private admin link!
 
-Sitemap: https://www.revueafricainedessciencessociales.site/Sitemap.xml
+# Direct search engines to your sitemap
+Sitemap: https://www.revueafricainedessciencessociales.com/sitemap.xml

@@ -10,17 +10,35 @@ const Footer: React.FC = () => {
   const LOGO_URL = "https://i.postimg.cc/br5pw9Fn/IMG-20260114-WA0099.jpg"
 
   useEffect(() => {
-    const fetchLiveStats = async () => {
+    const updateAndViewStats = async () => {
       try {
+        // 1. Increment View Count in Database
+        // This uses a Supabase RPC or a simple update to add +1 to the current view count
+        const { data: currentStats } = await supabase
+          .from('site_stats')
+          .select('views')
+          .eq('page_path', '/')
+          .maybeSingle();
+
+        if (currentStats) {
+          await supabase
+            .from('site_stats')
+            .update({ views: (currentStats.views || 0) + 1 })
+            .eq('page_path', '/');
+        }
+
+        // 2. Fetch Article Count
         const { count: articleCount } = await supabase
           .from('articles')
           .select('*', { count: 'exact', head: true })
           .eq('status', 'published');
 
+        // 3. Fetch Final Stats to Display
         const { data: globalStats } = await supabase
           .from('site_stats')
           .select('views, downloads')
-          .single();
+          .eq('page_path', '/')
+          .maybeSingle();
 
         setStats({
           articles: articleCount || 0,
@@ -28,10 +46,11 @@ const Footer: React.FC = () => {
           downloads: globalStats?.downloads || 450
         });
       } catch (err) {
-        console.error("Error fetching footer stats:", err);
+        console.error("Error with footer stats/counter:", err);
       }
     };
-    fetchLiveStats();
+
+    updateAndViewStats();
   }, []);
 
   return (
@@ -49,11 +68,12 @@ const Footer: React.FC = () => {
                 <h2 className="text-2xl font-serif font-bold text-white tracking-widest leading-none">
                   RASS<span className="text-yellow-500">JOURNAL</span>
                 </h2>
-                <span className="text-[10px] text-emerald-500 font-black tracking-[0.3em] uppercase mt-1">Revue Africaine des Sciences Sociales</span>
+                <span className="text-[10px] text-emerald-500 font-black tracking-[0.3em] uppercase mt-1">
+                  {language === 'en' ? 'African Journal of Social Sciences' : 'Revue Africaine des Sciences Sociales'}
+                </span>
               </div>
             </div>
             
-            {/* THIS TEXT HELPS GOOGLE INDEX YOU */}
             <p className="max-w-md text-sm leading-relaxed mb-10 text-emerald-100/60 font-light">
               {language === 'en' 
                 ? "The premier bilingual platform for Social Science research, Law reviews, and Academic publications in Cameroon and across Africa."
@@ -66,7 +86,9 @@ const Footer: React.FC = () => {
                   <Eye size={18} className="text-yellow-500" />
                   {stats.views.toLocaleString()}
                 </div>
-                <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">Reader Visits</span>
+                <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
+                  {language === 'en' ? 'Reader Visits' : 'Visites Lecteurs'}
+                </span>
               </div>
 
               <div className="flex flex-col">
@@ -74,15 +96,17 @@ const Footer: React.FC = () => {
                   <Download size={18} className="text-yellow-500" />
                   {stats.downloads.toLocaleString()}
                 </div>
-                <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">Downloads</span>
+                <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
+                  Downloads
+                </span>
               </div>
             </div>
           </div>
           
-          {/* SEO KEYWORDS COLUMN (Replaces Douala) */}
+          {/* Research Areas */}
           <div>
             <h3 className="text-yellow-500 font-serif mb-6 font-bold text-lg border-b border-white/5 pb-2 inline-block">
-               {language === 'en' ? 'Research Areas' : 'Domaines de Recherche'}
+                {language === 'en' ? 'Research Areas' : 'Domaines de Recherche'}
             </h3>
             <ul className="space-y-3 text-xs font-bold uppercase tracking-tighter text-emerald-100/50">
               <li className="flex items-center gap-2"><ShieldCheck size={12} className="text-emerald-700"/> Law & Jurisprudence</li>
@@ -92,7 +116,7 @@ const Footer: React.FC = () => {
             </ul>
           </div>
           
-          {/* Simple Contact */}
+          {/* Contact Section */}
           <div>
             <h3 className="text-yellow-500 font-serif mb-6 font-bold text-lg border-b border-white/5 pb-2 inline-block">
               Digital Office
