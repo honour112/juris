@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-# Direct search engines to your sitemap
-Sitemap: https://www.revueafricainedessciencessociales.com/sitemap.xml
+# Corrected to match your non-www domain
+Sitemap: https://revueafricainedessciencessociales.com/sitemap.xml
