@@ -45,7 +45,7 @@ const App: React.FC = () => {
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/articles" element={<Articles />} />
-              <Route path="/profile" element={<Profile />} />
+              {/* <Route path="/profile" element={<Profile />} /> */}
               <Route path="/submit" element={<Submit />} />
             </Route>
 

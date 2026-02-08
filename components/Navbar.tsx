@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { path: '/', label: t('navHome') },
     { path: '/articles', label: t('navArticles') },
-    { path: '/profile', label: t('navProfile') },
+    // { path: '/profile', label: t('navProfile') },
     // { path: '/admin', label: t('navAdmin') },
   ];
 
