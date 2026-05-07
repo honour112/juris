@@ -56,7 +56,18 @@ const Home: React.FC = () => {
                   {t('heroTitle').split(' ').slice(2).join(' ')}
                 </span>
               </h1>
-            </div>
+
+                                {/* --- ADD THIS SECTION BELOW --- */}
+                <div className={`mt-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                  <span className="text-emerald-100/60 text-xl md:text-3xl italic font-serif font-medium tracking-[0.15em] block">
+                    {language === 'en' ? 'African Perspectives' : 'Perspectives Africaines'}
+                  </span>
+                  {/* Optional: Add a sleek divider line to match the premium aesthetic */}
+                  <div className="w-24 h-px bg-yellow-500/40 mx-auto mt-4"></div>
+                </div>
+                {/* ------------------------------ */}
+              </div>
+            
 
             <p className={`text-lg md:text-2xl text-emerald-100/70 mb-14 max-w-2xl mx-auto font-light leading-relaxed transition-all duration-1000 delay-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
               {t('heroSubtitle')}

@@ -22,8 +22,6 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { path: '/', label: t('navHome') },
     { path: '/articles', label: t('navArticles') },
-    // { path: '/profile', label: t('navProfile') },
-    // { path: '/admin', label: t('navAdmin') },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -46,12 +44,24 @@ const Navbar: React.FC = () => {
                 <img 
                   src={LOGO_URL} 
                   alt="RASS Logo" 
-                  className="w-full h-full object-contain filter drop-shadow-2xl"
+                  className="w-full h-full object-contain filter drop-shadow-2xl rounded-full"
                 />
               </div>
-              <div className="flex flex-col -space-y-1">
-                <span className="text-yellow-500 text-[10px] font-black tracking-[0.5em] uppercase leading-none">RASS</span>
-                <span className="text-white text-xl font-serif font-bold tracking-widest group-hover:text-yellow-100 transition-colors">JOURNAL</span>
+              <div className="flex flex-col space-y-0.5">
+                    {/* RASS - Bold Serif Style */}
+                <span className="text-yellow-500 text-[20px] font-black tracking-normal uppercase leading-none font-serif border-b-2 border-yellow-500/20">
+                      R  A  S  S
+                </span>
+                              
+                {/* Italic Bilingual Tagline - Medium weight, Normal spacing */}
+                <span className="text-emerald-100/60 text-[9px] italic font-serif font-medium tracking-[0.1em] leading-relaxed ml-0.5">
+                  {language === 'en' ? 'African Perspectives' : 'Perspectives Africaines'}
+                </span>
+
+                {/* Journal - Smaller and Sleek */}
+                <span className="text-white text-[11px] font-serif font-medium tracking-[0.4em] uppercase group-hover:text-yellow-100 transition-colors">
+                  Journal
+                </span>
               </div>
             </Link>
 
@@ -118,7 +128,7 @@ const Navbar: React.FC = () => {
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Menu Close Button - Integrated into Menu */}
+          {/* Menu Close Button */}
           <div className="flex justify-end p-8">
             <button 
               onClick={() => setIsOpen(false)}
@@ -128,7 +138,7 @@ const Navbar: React.FC = () => {
             </button>
           </div>
 
-          {/* Menu Items - Scrollbar Hidden */}
+          {/* Menu Items */}
           <div className="flex-grow p-12 space-y-10 overflow-y-auto no-scrollbar">
             {navLinks.map((link, idx) => (
               <Link
@@ -152,7 +162,6 @@ const Navbar: React.FC = () => {
               </Link>
             ))}
             
-            {/* Call to Action in Menu */}
             <div 
               className="pt-10 transition-all duration-500"
               style={{ 
@@ -191,4 +200,4 @@ const Navbar: React.FC = () => {
   );
 };
 
-export default Navbar;
+export default Navbar;  
