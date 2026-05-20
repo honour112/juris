@@ -11,7 +11,7 @@ export const TRANSLATIONS: Translation = {
   changeLanguage: { en: 'Change Language', fr: 'Changer de langue' },
 
   // General / Hero
-  heroTitle: { en: 'African Social Sciences Review', fr: 'Revue Africaine des Sciences Sociales' },
+  heroTitle: { en: 'African Perspectives ', fr: 'Perspectives Africaines ' },
   heroSubtitle: { en: 'A monthly review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue mensuelle d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
   heroCta: { en: 'Read Current Edition', fr: 'Lire l\'Édition Actuelle' },
   issnLabel: { en: 'Monthly Journal • ISSN 2304-xxxx', fr: 'Revue Mensuelle • ISSN 2304-xxxx' },
@@ -19,8 +19,8 @@ export const TRANSLATIONS: Translation = {
   // Home Page
   aboutFirm: { en: 'Scientific Rigor & Local Insight', fr: 'Rigueur Scientifique & Ancrage Local' },
   aboutFirmText: { 
-    en: 'Published monthly, the Review brings together academics and practitioners to analyze the dynamics shaping our societies',
-    fr: 'Publiée mensuellement, la Revue rassemble universitaires et praticiens pour analyser les dynamiques façonnant nos sociétés. '
+    en: 'The Review brings together academics and practitioners to analyze the dynamics shaping our societies',
+    fr: 'La Revue rassemble universitaires et praticiens pour analyser les dynamiques façonnant nos sociétés. '
   },
   socialSciences: { en: 'Social Sciences', fr: 'Sciences Sociales' },
   politicalScience: { en: 'Political Science', fr: 'Sciences Politiques' },

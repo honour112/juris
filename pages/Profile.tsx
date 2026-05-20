@@ -1,11 +1,11 @@
 import React from 'react';
-import { Mail, Phone, Calendar, MapPin, Scale, Award, BookOpen, Shield, MessageCircle, Users, FileText, CheckCircle } from 'lucide-react';
+import { Mail, Phone, Calendar, MapPin, Scale, Award, BookOpen, Shield, MessageCircle, Users, FileText, CheckCircle, GraduationCap } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Profile: React.FC = () => {
   const { t, language } = useLanguage();
 
-  // Content based on the uploaded RASS.pdf
+  // Content keeping ALL names integrated systematically
   const journalInfo = {
     name: "Revue Africaine des Sciences Sociales",
     acronym: "RASS",
@@ -13,9 +13,24 @@ const Profile: React.FC = () => {
     email: "revueafricainedessciencessocia@gmail.com",
     whatsapp: "+237696479828",
     editorialBoard: {
-      director: "Directeur de Rédaction",
-      chief: "Dr. MUMLAJA Emmanuel",
-      members: ["Dr. SAPITODEN Elie", "Dr. TSALA Moise"]
+      director: {
+        name: "Prof. NGOUYAMSA MEFIRE Marcel Bruce",
+        titleEn: "Full Professor",
+        titleFr: "Professeur Titulaire des Universités",
+        deptEn: "Political Science / International Relations",
+        deptFr: "Science Politique / Relations Internationales"
+      },
+      chief: {
+        name: "Dr. MUMLAJA Emmanuel",
+        titleEn: "Doctor / Ph.D",
+        titleFr: "Docteur / Ph.D",
+        deptEn: "Anthropology",
+        deptFr: "Anthropologie"
+      },
+      members: [
+        { name: "Dr. SAPITODEN Elie", titleEn: "Editorial Member", titleFr: "Membre du Comité" },
+        { name: "Dr. TSALA Moise", titleEn: "Editorial Member", titleFr: "Membre du Comité" }
+      ]
     }
   };
 
@@ -59,7 +74,7 @@ const Profile: React.FC = () => {
                   <span className="text-sm">{journalInfo.email}</span>
                 </a>
                 <a 
-                  href={`https://wa.me/${journalInfo.whatsapp.replace('+237696479828', '')}`}
+                  href={`https://wa.me/${journalInfo.whatsapp.replace('+', '')}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-green-600 text-white px-6 py-3 rounded-sm font-bold hover:bg-green-500 transition-all shadow-lg flex items-center gap-2 hover:scale-105 active:scale-95"
@@ -91,28 +106,59 @@ const Profile: React.FC = () => {
               </p>
             </section>
 
-            {/* Editorial Board - Using Names from File */}
+            {/* Editorial Board Section - Full Integrated List */}
             <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
                  <Users className="text-yellow-600" />
                  {language === 'en' ? 'Editorial Board' : 'Comité de Rédaction'}
                  <span className="h-px bg-gray-200 flex-1"></span>
               </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="p-8 bg-emerald-50 rounded-sm border-l-4 border-emerald-900">
-                  <h3 className="text-emerald-900 font-bold text-lg mb-1">{journalInfo.editorialBoard.chief}</h3>
-                  <p className="text-emerald-700 text-sm uppercase tracking-tighter font-semibold">
-                    {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
+              
+              <div className="space-y-6">
+                {/* 1. Directeur de Publication (Top Premium Card) */}
+                <div className="p-8 bg-gradient-to-br from-emerald-50 to-white rounded-sm border-l-4 border-emerald-950 shadow-sm">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-emerald-700 block mb-2">
+                    {language === 'en' ? 'Publishing Director' : 'Directeur de Publication'}
+                  </span>
+                  <h3 className="text-emerald-950 font-serif font-bold text-2xl mb-1">
+                    {journalInfo.editorialBoard.director.name}
+                  </h3>
+                  <p className="text-emerald-900 font-medium text-sm flex items-center gap-2 mt-2">
+                    <GraduationCap size={16} className="text-yellow-600" />
+                    {language === 'en' ? journalInfo.editorialBoard.director.titleEn : journalInfo.editorialBoard.director.titleFr}
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1 pl-6">
+                    {language === 'en' ? journalInfo.editorialBoard.director.deptEn : journalInfo.editorialBoard.director.deptFr}
                   </p>
                 </div>
-                {journalInfo.editorialBoard.members.map((member, idx) => (
-                  <div key={idx} className="p-8 bg-gray-50 rounded-sm border border-gray-100 hover:shadow-md transition-shadow">
-                    <h3 className="text-emerald-950 font-bold text-lg mb-1">{member}</h3>
-                    <p className="text-gray-500 text-sm uppercase font-medium">
-                      {language === 'en' ? 'Editorial Member' : 'Membre du Comité'}
-                    </p>
-                  </div>
-                ))}
+
+                {/* 2. Rédacteur en Chef Card */}
+                <div className="p-8 bg-emerald-50/40 rounded-sm border-l-4 border-yellow-500 shadow-sm">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-yellow-600 block mb-2">
+                    {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
+                  </span>
+                  <h3 className="text-emerald-950 font-bold text-xl mb-1">
+                    {journalInfo.editorialBoard.chief.name}
+                  </h3>
+                  <p className="text-emerald-800 text-sm font-medium">
+                    {language === 'en' ? journalInfo.editorialBoard.chief.titleEn : journalInfo.editorialBoard.chief.titleFr}
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1">
+                    {language === 'en' ? journalInfo.editorialBoard.chief.deptEn : journalInfo.editorialBoard.chief.deptFr}
+                  </p>
+                </div>
+
+                {/* 3. Original Board Members Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {journalInfo.editorialBoard.members.map((member, idx) => (
+                    <div key={idx} className="p-6 bg-gray-50/80 rounded-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 block mb-2">
+                        {language === 'en' ? member.titleEn : member.titleFr}
+                      </span>
+                      <h3 className="text-emerald-950 font-bold text-lg mb-1">{member.name}</h3>
+                    </div>
+                  ))}
+                </div>
               </div>
             </section>
 

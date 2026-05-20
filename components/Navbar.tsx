@@ -18,10 +18,11 @@ const Navbar: React.FC = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
+// commenting out the navlinks is going to remove it from the navbar take good care of this  
   const navLinks = [
     { path: '/', label: t('navHome') },
     { path: '/articles', label: t('navArticles') },
+    // { path: '/profile', label: t('navProfile') },
   ];
 
   const isActive = (path: string) => location.pathname === path;

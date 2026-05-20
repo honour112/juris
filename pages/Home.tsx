@@ -60,7 +60,7 @@ const Home: React.FC = () => {
                                 {/* --- ADD THIS SECTION BELOW --- */}
                 <div className={`mt-6 transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                   <span className="text-emerald-100/60 text-xl md:text-3xl italic font-serif font-medium tracking-[0.15em] block">
-                    {language === 'en' ? 'African Perspectives' : 'Perspectives Africaines'}
+                    {language === 'en' ? 'African Social Sciences Review ' : 'Revue Africaine des Sciences Sociales '}
                   </span>
                   {/* Optional: Add a sleek divider line to match the premium aesthetic */}
                   <div className="w-24 h-px bg-yellow-500/40 mx-auto mt-4"></div>
@@ -313,7 +313,7 @@ const Home: React.FC = () => {
               <div className="flex flex-wrap justify-center gap-12 mt-8 opacity-60">
                 <div className="flex items-center gap-3">
                   <FileCheck size={20} className="text-yellow-500" />
-                  <span className="text-white text-xs font-bold tracking-widest uppercase">Max 30 Pages</span>
+                  <span className="text-white text-xs font-bold tracking-widest uppercase">Max 20 Pages</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe size={20} className="text-yellow-500" />

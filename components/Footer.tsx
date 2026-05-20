@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Eye, BookOpen, Mail, MessageCircle, Download, ShieldCheck, Globe, GraduationCap } from 'lucide-react';
+import { Eye, BookOpen, Mail, MessageCircle, Download, ShieldCheck, Globe, GraduationCap, Feather } from 'lucide-react';
 import { supabase } from '../src/supabaseClient';
 
 const Footer: React.FC = () => {
@@ -13,7 +13,6 @@ const Footer: React.FC = () => {
     const updateAndViewStats = async () => {
       try {
         // 1. Increment View Count in Database
-        // This uses a Supabase RPC or a simple update to add +1 to the current view count
         const { data: currentStats } = await supabase
           .from('site_stats')
           .select('views')
@@ -58,7 +57,8 @@ const Footer: React.FC = () => {
       <div className="absolute inset-0 opacity-[0.02] bg-[url('https://www.transparenttextures.com/patterns/dark-leather.png')] pointer-events-none"></div>
       
       <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-20">
+        {/* Adjusted from md:grid-cols-4 to md:grid-cols-5 to accommodate the new credits column layout */}
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-12 lg:gap-10">
           
           {/* Brand & Stats Column */}
           <div className="col-span-1 md:col-span-2">
@@ -99,6 +99,33 @@ const Footer: React.FC = () => {
                 <span className="text-[9px] uppercase tracking-[0.2em] text-emerald-600 font-black mt-1">
                   Downloads
                 </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Editorial Leadership Section */}
+          <div>
+            <h3 className="text-yellow-500 font-serif mb-6 font-bold text-lg border-b border-white/5 pb-2 inline-block">
+              {language === 'en' ? 'Editorial Board' : 'Comité de Rédaction'}
+            </h3>
+            <div className="space-y-4 text-xs">
+              <div>
+                <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-500">
+                  {language === 'en' ? 'Publishing Director' : 'Directeur de Publication'}
+                </span>
+                <p className="text-emerald-100/90 font-medium mt-1">Prof. NGOUYAMSA MEFIRE Marcel Bruce</p>
+                <p className="text-emerald-100/40 italic font-light mt-0.5">
+                  {language === 'en' ? 'Full Professor' : 'Professeur Titulaire des Universités'}<br />
+                  Political Science / IR
+                </p>
+              </div>
+              
+              <div className="pt-2 border-t border-white/5">
+                <span className="block text-[10px] font-black uppercase tracking-wider text-emerald-500">
+                  {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
+                </span>
+                <p className="text-emerald-100/90 font-medium mt-1">Dr. MUMLAJA Emmanuel</p>
+                <p className="text-emerald-100/40 italic font-light mt-0.5">Ph.D, Anthropologie</p>
               </div>
             </div>
           </div>
