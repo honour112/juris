@@ -74,11 +74,11 @@ const Footer: React.FC = () => {
               </div>
             </div>
             
-            <p className="max-w-md text-sm leading-relaxed mb-10 text-emerald-100/60 font-light">
+            {/* <p className="max-w-md text-sm leading-relaxed mb-10 text-emerald-100/60 font-light">
               {language === 'en' 
                 ? "The premier bilingual platform for Social Science research, Law reviews, and Academic publications in Cameroon and across Africa."
                 : "La plateforme bilingue de référence pour la recherche en Sciences Sociales, les revues de Droit et les publications académiques au Cameroun."}
-            </p>
+            </p> */}
 
             <div className="flex flex-wrap gap-10 mt-6 border-l border-yellow-500/30 pl-8">
               <div className="flex flex-col">
@@ -116,7 +116,7 @@ const Footer: React.FC = () => {
                 <p className="text-emerald-100/90 font-medium mt-1">Prof. NGOUYAMSA MEFIRE Marcel Bruce</p>
                 <p className="text-emerald-100/40 italic font-light mt-0.5">
                   {language === 'en' ? 'Full Professor' : 'Professeur Titulaire des Universités'}<br />
-                  Political Science / IR
+                  science politique / relations internationales
                 </p>
               </div>
               
@@ -125,7 +125,7 @@ const Footer: React.FC = () => {
                   {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
                 </span>
                 <p className="text-emerald-100/90 font-medium mt-1">Dr. MUMLAJA Emmanuel</p>
-                <p className="text-emerald-100/40 italic font-light mt-0.5">Ph.D, Anthropologie</p>
+                <p className="text-emerald-100/40 italic font-light mt-0.5">Docteur/Ph.D, Anthropologie</p>
               </div>
             </div>
           </div>

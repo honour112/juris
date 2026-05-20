@@ -12,9 +12,9 @@ export const TRANSLATIONS: Translation = {
 
   // General / Hero
   heroTitle: { en: 'African Perspectives ', fr: 'Perspectives Africaines ' },
-  heroSubtitle: { en: 'A monthly review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue mensuelle d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
+  heroSubtitle: { en: 'A review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
   heroCta: { en: 'Read Current Edition', fr: 'Lire l\'Édition Actuelle' },
-  issnLabel: { en: 'Monthly Journal • ISSN 2304-xxxx', fr: 'Revue Mensuelle • ISSN 2304-xxxx' },
+  issnLabel: { en: '• ISSN 2304-xxxx', fr: ' • ISSN 2304-xxxx' },
   
   // Home Page
   aboutFirm: { en: 'Scientific Rigor & Local Insight', fr: 'Rigueur Scientifique & Ancrage Local' },
