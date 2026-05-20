@@ -164,12 +164,12 @@ const Footer: React.FC = () => {
         {/* Copyright Bar */}
         <div className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-[10px] font-black uppercase tracking-[0.5em] text-emerald-800 text-center md:text-left">
-            &copy; {new Date().getFullYear()} RASS | Revue Africaine des Sciences Sociales et Droit.
+            &copy; {new Date().getFullYear()} RASS | Revue Africaine des Sciences Sociales.
           </div>
           <div className="flex gap-4 text-[9px] uppercase tracking-widest font-bold text-emerald-900">
             <span>Cameroon</span>
             <span>•</span>
-            <span>Africa</span>
+            <span></span>
           </div>
         </div>   
       </div>
