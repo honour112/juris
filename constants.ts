@@ -89,11 +89,11 @@ export const TRANSLATIONS: Translation = {
   
   // Submit Page
   submitHeroTitle: { en: 'Call for Papers', fr: 'Appel à Contributions' },
-  submitHeroSubtitle: { en: 'Permanent call for monthly issues. Submit your research today.', fr: 'Appel permanent pour les numéros mensuels. Soumettez votre recherche aujourd\'hui.' },
+  submitHeroSubtitle: { en: 'Permanent call for issues. Submit your research today.', fr: 'Appel permanent pour les numéros. Soumettez votre recherche aujourd\'hui.' },
   editorialPolicyTitle: { en: 'Editorial Policy & Submission Guidelines', fr: 'Politique de Rédaction & Directives' },
   epIntro: {
-    en: 'The Review maintains a permanent call for papers for its monthly issues. Contributions are accepted in English and French.',
-    fr: 'La Revue lance un appel à contribution permanent pour ses numéros mensuels. Elle reçoit les contributions en français et en anglais.'
+    en: 'The Review maintains a permanent call for papers for its issues. Contributions are accepted in English and French.',
+    fr: 'La Revue lance un appel à contribution permanent pour ses numéros. Elle reçoit les contributions en français et en anglais.'
   },
   epFormatTitle: { en: 'Formatting Rules', fr: 'Règles de Formatage' },
   epFormatDesc: {
