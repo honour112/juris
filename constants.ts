@@ -4,7 +4,7 @@ export const TRANSLATIONS: Translation = {
   // Navigation
   navHome: { en: 'Home', fr: 'Accueil' },
   navArticles: { en: 'Archives & Editions', fr: 'Archives & Éditions' },
-  navProfile: { en: 'Editorial Board', fr: 'Comité de Rédaction' },
+  navAbout: { en: 'About', fr: 'À propos' },
   navSubmit: { en: 'Submit Paper', fr: 'Soumettre un Article' },
   navAdmin: { en: 'Admin Portal', fr: 'Portail Admin' },
   navContact: { en: 'Contact', fr: 'Contact' },

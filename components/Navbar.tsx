@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
   const navLinks = [
     { path: '/', label: t('navHome') },
     { path: '/articles', label: t('navArticles') },
-    // { path: '/profile', label: t('navProfile') },
+    { path: '/About', label: t('navAbout') },
   ];
 
   const isActive = (path: string) => location.pathname === path;

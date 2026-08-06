@@ -4,7 +4,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Articles from './pages/Articles';
-import Profile from './pages/Profile';
+import Profile from './pages/About';
 import Admin from './pages/Admin';
 import Submit from './pages/Submit';
 import { LanguageProvider } from './context/LanguageContext';
@@ -45,7 +45,7 @@ const App: React.FC = () => {
             <Route element={<PublicLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/articles" element={<Articles />} />
-              {/* <Route path="/profile" element={<Profile />} /> */}
+              <Route path="/About" element={<Profile />} />
               <Route path="/submit" element={<Submit />} />
             </Route>
 
