@@ -36,7 +36,7 @@ export const TRANSLATIONS: Translation = {
 
   // Articles Page
   journalArchives: { en: 'Journal Archives', fr: 'Archives de la Revue' },
-  archivesDesc: { en: 'Browse past editions and monthly issues of the African Social Sciences Review.', fr: 'Parcourez les éditions passées et les numéros mensuels de la Revue Africaine des Sciences Sociales.' },
+  archivesDesc: { en: 'Browse past editions and issues of the African Social Sciences Review.', fr: 'Parcourez les éditions passées et les numéros de la Revue Africaine des Sciences Sociales.' },
   callForPapersCaps: { en: 'Call for Papers', fr: 'Appel à Contributions' },
   articleCtaTitle: { en: 'Publish With Us', fr: 'Publiez Avec Nous' },
   joinNetwork: { en: 'Join our network of legal professionals and academics. Submit your articles for review.', fr: 'Rejoignez notre réseau de professionnels du droit et d\'universitaires. Soumettez vos articles pour révision.' },
