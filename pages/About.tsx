@@ -22,7 +22,7 @@ const Profile: React.FC = () => {
     issn: "ISSN en cours...",
     email: "revueafricainedessciencessocia@gmail.com",
     whatsapp: "+237696479828",
-    contactPerson: "SAPITODEN ÉLIE",
+    responsibleEditor: "SAPITODEN ÉLIE",
     address: "454, Ngaoundéré, Cameroon",
     phones: ["+237 696 479 828", "+237 651 529 414"],
     contactEmail: "sapitodenelie@gmail.com",
@@ -105,8 +105,10 @@ const Profile: React.FC = () => {
       <div className="max-w-6xl mx-auto px-6 py-20">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-16">
           
-          {/* Left Column: About, Board, Process & Contact Grid */}
+          {/* Left Column */}
           <div className="lg:col-span-2 space-y-16">
+            
+            {/* 1. About RASS */}
             <section className="animate-fade-in-up">
               <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-6 flex items-center gap-4">
                 {language === 'en' ? 'About RASS' : 'À propos de la RASS'}
@@ -119,89 +121,11 @@ const Profile: React.FC = () => {
               </p>
             </section>
 
-            {/* Editorial Board Section */}
-            <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-              <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
-                <Users className="text-yellow-600" />
-                {language === 'en' ? 'Editorial Board' : 'Comité de Rédaction'}
-                <span className="h-px bg-gray-200 flex-1"></span>
-              </h2>
-              
-              <div className="space-y-6">
-                {/* 1. Directeur de Publication */}
-                <div className="p-8 bg-gradient-to-br from-emerald-50 to-white rounded-sm border-l-4 border-emerald-950 shadow-sm">
-                  <span className="text-[10px] uppercase font-black tracking-widest text-emerald-700 block mb-2">
-                    {language === 'en' ? 'Publishing Director' : 'Directeur de Publication'}
-                  </span>
-                  <h3 className="text-emerald-950 font-serif font-bold text-2xl mb-1">
-                    {journalInfo.editorialBoard.director.name}
-                  </h3>
-                  <p className="text-emerald-900 font-medium text-sm flex items-center gap-2 mt-2">
-                    <GraduationCap size={16} className="text-yellow-600" />
-                    {language === 'en' ? journalInfo.editorialBoard.director.titleEn : journalInfo.editorialBoard.director.titleFr}
-                  </p>
-                  <p className="text-gray-500 text-xs mt-1 pl-6">
-                    {language === 'en' ? journalInfo.editorialBoard.director.deptEn : journalInfo.editorialBoard.director.deptFr}
-                  </p>
-                </div>
-
-                {/* 2. Rédacteur en Chef */}
-                <div className="p-8 bg-emerald-50/40 rounded-sm border-l-4 border-yellow-500 shadow-sm">
-                  <span className="text-[10px] uppercase font-black tracking-widest text-yellow-600 block mb-2">
-                    {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
-                  </span>
-                  <h3 className="text-emerald-950 font-bold text-xl mb-1">
-                    {journalInfo.editorialBoard.chief.name}
-                  </h3>
-                  <p className="text-emerald-800 text-sm font-medium">
-                    {language === 'en' ? journalInfo.editorialBoard.chief.titleEn : journalInfo.editorialBoard.chief.titleFr}
-                  </p>
-                  <p className="text-gray-500 text-xs mt-1">
-                    {language === 'en' ? journalInfo.editorialBoard.chief.deptEn : journalInfo.editorialBoard.chief.deptFr}
-                  </p>
-                </div>
-
-                {/* 3. Board Members Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {journalInfo.editorialBoard.members.map((member, idx) => (
-                    <div key={idx} className="p-6 bg-gray-50/80 rounded-sm border border-gray-100 hover:shadow-md transition-shadow">
-                      <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 block mb-2">
-                        {language === 'en' ? member.titleEn : member.titleFr}
-                      </span>
-                      <h3 className="text-emerald-950 font-bold text-lg mb-1">{member.name}</h3>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* Publication Process */}
-            <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
-              <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
-                <FileText className="text-yellow-600" />
-                {language === 'en' ? 'Publication Procedure' : 'Procédure de Publication'}
-              </h2>
-              <div className="space-y-4">
-                {[
-                  { en: "Pre-evaluation for editorial compliance", fr: "Une pré-évaluation de conformité à la politique de rédaction" },
-                  { en: "Scientific peer review (Form and Content)", fr: "Évaluation du caractère scientifique (Fond et Forme)" },
-                  { en: "Final validation and management fee payment", fr: "Validation définitive et frais de gestion" }
-                ].map((step, i) => (
-                  <div key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors group">
-                    <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-sm group-hover:bg-yellow-500 group-hover:text-white transition-all">
-                      {i + 1}
-                    </div>
-                    <p className="text-gray-700 font-medium">{step[language]}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* Integrated Direct Contact Section */}
-            <section className="animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+            {/* 2. Direct Contact Section (Positionnée avant le comité de rédaction) */}
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
               <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
                 <Phone className="text-yellow-600" />
-                {language === 'en' ? 'Direct Contact & Inquiries' : 'Contacts Directs & Renseignements'}
+                {language === 'en' ? 'Direct Contact & Editor' : 'Contacts / Editeur '}
                 <span className="h-px bg-gray-200 flex-1"></span>
               </h2>
 
@@ -210,9 +134,9 @@ const Profile: React.FC = () => {
                   <Users className="text-emerald-700 mt-1 shrink-0" size={20} />
                   <div>
                     <h4 className="font-semibold text-emerald-950 text-sm">
-                      {language === 'en' ? 'Contact Person' : 'Personne de contact'}
+                      {language === 'en' ? 'Responsible Editor' : 'Éditeur responsable'}
                     </h4>
-                    <p className="text-gray-700 font-medium mt-1">{journalInfo.contactPerson}</p>
+                    <p className="text-gray-700 font-medium mt-1">{journalInfo.responsibleEditor}</p>
                   </div>
                 </div>
 
@@ -258,6 +182,84 @@ const Profile: React.FC = () => {
                     </a>
                   </div>
                 </div>
+              </div>
+            </section>
+
+            {/* 3. Editorial Board Section */}
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+              <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
+                <Users className="text-yellow-600" />
+                {language === 'en' ? 'Editorial Board' : 'Comité de Rédaction'}
+                <span className="h-px bg-gray-200 flex-1"></span>
+              </h2>
+              
+              <div className="space-y-6">
+                {/* Directeur de Publication */}
+                <div className="p-8 bg-gradient-to-br from-emerald-50 to-white rounded-sm border-l-4 border-emerald-950 shadow-sm">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-emerald-700 block mb-2">
+                    {language === 'en' ? 'Publishing Director' : 'Directeur de Publication'}
+                  </span>
+                  <h3 className="text-emerald-950 font-serif font-bold text-2xl mb-1">
+                    {journalInfo.editorialBoard.director.name}
+                  </h3>
+                  <p className="text-emerald-900 font-medium text-sm flex items-center gap-2 mt-2">
+                    <GraduationCap size={16} className="text-yellow-600" />
+                    {language === 'en' ? journalInfo.editorialBoard.director.titleEn : journalInfo.editorialBoard.director.titleFr}
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1 pl-6">
+                    {language === 'en' ? journalInfo.editorialBoard.director.deptEn : journalInfo.editorialBoard.director.deptFr}
+                  </p>
+                </div>
+
+                {/* Rédacteur en Chef */}
+                <div className="p-8 bg-emerald-50/40 rounded-sm border-l-4 border-yellow-500 shadow-sm">
+                  <span className="text-[10px] uppercase font-black tracking-widest text-yellow-600 block mb-2">
+                    {language === 'en' ? 'Editor-in-Chief' : 'Rédacteur en Chef'}
+                  </span>
+                  <h3 className="text-emerald-950 font-bold text-xl mb-1">
+                    {journalInfo.editorialBoard.chief.name}
+                  </h3>
+                  <p className="text-emerald-800 text-sm font-medium">
+                    {language === 'en' ? journalInfo.editorialBoard.chief.titleEn : journalInfo.editorialBoard.chief.titleFr}
+                  </p>
+                  <p className="text-gray-500 text-xs mt-1">
+                    {language === 'en' ? journalInfo.editorialBoard.chief.deptEn : journalInfo.editorialBoard.chief.deptFr}
+                  </p>
+                </div>
+
+                {/* Board Members Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {journalInfo.editorialBoard.members.map((member, idx) => (
+                    <div key={idx} className="p-6 bg-gray-50/80 rounded-sm border border-gray-100 hover:shadow-md transition-shadow">
+                      <span className="text-[10px] uppercase font-bold tracking-widest text-gray-400 block mb-2">
+                        {language === 'en' ? member.titleEn : member.titleFr}
+                      </span>
+                      <h3 className="text-emerald-950 font-bold text-lg mb-1">{member.name}</h3>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+
+            {/* 4. Publication Process */}
+            <section className="animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <h2 className="text-3xl font-serif font-bold text-emerald-950 mb-8 flex items-center gap-4">
+                <FileText className="text-yellow-600" />
+                {language === 'en' ? 'Publication Procedure' : 'Procédure de Publication'}
+              </h2>
+              <div className="space-y-4">
+                {[
+                  { en: "Pre-evaluation for editorial compliance", fr: "Une pré-évaluation de conformité à la politique de rédaction" },
+                  { en: "Scientific peer review (Form and Content)", fr: "Évaluation du caractère scientifique (Fond et Forme)" },
+                  { en: "Final validation and management fee payment", fr: "Validation définitive et frais de gestion" }
+                ].map((step, i) => (
+                  <div key={i} className="flex items-center gap-4 p-4 hover:bg-gray-50 rounded-lg transition-colors group">
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-900 flex items-center justify-center font-bold text-sm group-hover:bg-yellow-500 group-hover:text-white transition-all">
+                      {i + 1}
+                    </div>
+                    <p className="text-gray-700 font-medium">{step[language]}</p>
+                  </div>
+                ))}
               </div>
             </section>
           </div>
