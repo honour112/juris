@@ -54,11 +54,6 @@ const Navbar: React.FC = () => {
                       R  A  S  S
                 </span>
                               
-                {/* Italic Bilingual Tagline - Medium weight, Normal spacing */}
-                <span className="text-emerald-100/60 text-[9px] italic font-serif font-medium tracking-[0.1em] leading-relaxed ml-0.5">
-                  {language === 'en' ? 'African Perspectives' : 'Perspectives Africaines'}
-                </span>
-
                 {/* Journal - Smaller and Sleek */}
                 <span className="text-white text-[11px] font-serif font-medium tracking-[0.4em] uppercase group-hover:text-yellow-100 transition-colors">
                   Journal

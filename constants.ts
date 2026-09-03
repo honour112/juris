@@ -11,7 +11,7 @@ export const TRANSLATIONS: Translation = {
   changeLanguage: { en: 'Change Language', fr: 'Changer de langue' },
 
   // General / Hero
-  heroTitle: { en: 'African Perspectives ', fr: 'Perspectives Africaines ' },
+  heroTitle: { en: 'RASS Journal', fr: 'Revue RASS' },
   heroSubtitle: { en: 'A review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
   heroCta: { en: 'Read Current Edition', fr: 'Lire l\'Édition Actuelle' },
   issnLabel: { en: '• ISSN 2304-xxxx', fr: ' • ISSN 2304-xxxx' },
