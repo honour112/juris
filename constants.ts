@@ -14,7 +14,7 @@ export const TRANSLATIONS: Translation = {
   heroTitle: { en: 'RASS Journal', fr: 'Revue RASS' },
   heroSubtitle: { en: 'A review of social analysis dedicated to exploring social phenomena across the African continent.', fr: 'Une revue d’analyse sociale qui explore les phénomènes sociaux en Afrique.' },
   heroCta: { en: 'Read Current Edition', fr: 'Lire l\'Édition Actuelle' },
-  issnLabel: { en: '• ISSN 2304-xxxx', fr: ' • ISSN 2304-xxxx' },
+  issnLabel: { en: '• ISSN 3136 – 7577', fr: ' • ISSN 3136 – 7577' },
   
   // Home Page
   aboutFirm: { en: 'Scientific Rigor & Local Insight', fr: 'Rigueur Scientifique & Ancrage Local' },
