@@ -46,6 +46,11 @@ export const TRANSLATIONS: Translation = {
   readAbstract: { en: 'Read Abstract', fr: 'Lire le Résumé' },
   downloadBtn: { en: 'Download PDF', fr: 'Télécharger PDF' },
   noResults: { en: 'No articles found matching your criteria.', fr: 'Aucun article trouvé correspondant à vos critères.' },
+  researchArchive: { en: 'RASS Research Archive', fr: 'Archives de Recherche RASS' },
+  pageLabel: { en: 'Page', fr: 'Page' },
+  unlockDocument: { en: 'Unlock full document', fr: 'Déverrouiller le document complet' },
+  previousPage: { en: 'Previous page', fr: 'Page précédente' },
+  nextPage: { en: 'Next page', fr: 'Page suivante' },
 
   // Profile Page
   yearsExp: { en: 'Years Exp.', fr: 'Ans d\'Exp.' },

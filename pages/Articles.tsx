@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { lazy, Suspense, useEffect, useState, useMemo } from 'react';
 import { 
   Download, 
   Calendar, 
@@ -6,12 +6,14 @@ import {
   Loader2, 
   X, 
   BookOpen,
-  FileText 
+  FileText
 } from 'lucide-react';
-import Preview from './Preview.tsx';
 import { useLanguage } from '../context/LanguageContext'; 
 import ArticlesHero from './ArticleHero.tsx';
+import Preview from './Preview.tsx';
 import { supabase } from '../src/supabaseClient'; // Import your supabase client
+
+const DocumentReader = lazy(() => import('./DocumentReader.tsx'));
 
 interface Article {
   id: string; // Supabase uses string UUIDs by default
@@ -23,13 +25,18 @@ interface Article {
 }
 
 const Articles = () => {
-  const { language } = useLanguage(); 
+  const { language, t } = useLanguage(); 
   
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [selectedMonth, setSelectedMonth] = useState<string>('all');
-  const [activePdf, setActivePdf] = useState<{ url: string; title: string } | null>(null);
+  const [activePdf, setActivePdf] = useState<{ url: string; title: string; id: string; path: string } | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
+  const [paid, setPaid] = useState(false);
+  const [payment, setPayment] = useState<{ articleId: string; title: string; path: string; phone: string; referenceCode?: string; status?: string } | null>(null);
   const [downloadingId, setDownloadingId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,34 +46,106 @@ const Articles = () => {
   const fetchArticles = async () => {
     setLoading(true);
     try {
+      if (!supabase) {
+        throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.local.');
+      }
+
       // Fetching directly from Supabase instead of Localhost API
       const { data, error } = await supabase
         .from('articles')
-        .select('*')
+        .select('id, title, author, date, pdf_path, status')
         .eq('status', 'published') // Only show published ones to the public
         .order('date', { ascending: false });
 
       if (error) throw error;
       setArticles(data || []);
     } catch (err) {
-      console.error("Supabase Fetch Error:", err);
+      console.error('Supabase Fetch Error:', err);
+      setLoadError(err instanceof Error ? err.message : 'Unable to load articles from Supabase.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Get the public URL for the PDF from Supabase Storage
-  const getSupabaseUrl = (path: string) => {
-    if (!path) return '';
-    const { data } = supabase.storage
-      .from('article-pdfs')
-      .getPublicUrl(path);
-    return data.publicUrl;
+  const openDocument = async (article: Article) => {
+    const title = language === 'en' ? article.title.en : article.title.fr;
+    setCurrentPage(1);
+    setPageCount(0);
+    setPaid(false);
+    setActivePdf({ url: '', title, id: article.id, path: article.pdf_path });
+    try {
+      if (!supabase) {
+        throw new Error('Supabase is not configured. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to .env.local.');
+      }
+
+      let url = '';
+      if (import.meta.env.DEV) {
+        url = supabase.storage.from('article-pdfs').getPublicUrl(article.pdf_path).data.publicUrl;
+      } else {
+        const response = await fetch('/api/document-preview', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ path: article.pdf_path })
+        });
+        const body = await response.json();
+        if (!response.ok) throw new Error(body.error || 'Preview unavailable');
+        url = body.url;
+      }
+      if (url) setActivePdf({ url, title, id: article.id, path: article.pdf_path });
+    } catch (error) {
+      console.error('Document preview error:', error);
+      setActivePdf(null);
+    }
+  };
+
+  const requestPayment = (articleId: string, title: string, path: string) => {
+    setPayment({ articleId, title, path, phone: '' });
+  };
+
+  const verifyPayment = async (referenceCode: string, articleId: string, path: string) => {
+    const response = await fetch('/api/document-access', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ referenceCode, articleId, path })
+    });
+    const body = await response.json();
+    if (body.paid && body.url) {
+      setPaid(true);
+      setActivePdf((current) => current ? { ...current, url: body.url } : current);
+      setPayment(null);
+      return true;
+    }
+    return false;
+  };
+
+  const startPayment = async () => {
+    if (!payment?.phone) return;
+    const response = await fetch('/api/create-campay-payment', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        phoneNumber: payment.phone,
+        articleId: payment.articleId,
+      })
+    });
+    const body = await response.json();
+    if (!response.ok || !body.referenceCode) {
+      setPayment((current) => current ? { ...current, status: body.error || 'Unable to start payment.' } : current);
+      return;
+    }
+    setPayment((current) => current ? { ...current, referenceCode: body.referenceCode, status: 'PENDING' } : current);
+    const check = async (attempt = 0): Promise<void> => {
+      if (attempt >= 15) return;
+      const complete = await verifyPayment(body.referenceCode, payment.articleId, payment.path);
+      if (!complete) window.setTimeout(() => check(attempt + 1), 4000);
+    };
+    check();
   };
 
   const handleDownload = async (path: string, title: string, id: string) => {
+    if (!paid || !activePdf?.url) {
+      requestPayment(id, title, path);
+      return;
+    }
     setDownloadingId(id);
-    const url = getSupabaseUrl(path);
+    const url = activePdf.url;
     
     try {
       const response = await fetch(url);
@@ -81,7 +160,7 @@ const Articles = () => {
       window.URL.revokeObjectURL(blobUrl);
     } catch (err) {
       // Fallback: Open in new tab if blob download fails
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
     } finally {
       setDownloadingId(null);
     }
@@ -105,6 +184,16 @@ const Articles = () => {
     </div>
   );
 
+  if (loadError) return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-6">
+      <div className="max-w-lg rounded-2xl bg-white border border-red-100 p-8 text-center shadow-sm">
+        <FileText className="mx-auto mb-4 text-red-700" size={36} />
+        <h1 className="font-serif text-2xl text-emerald-950 mb-3">Unable to load the archive</h1>
+        <p className="text-sm text-slate-600">Check the Supabase URL, anon key, table permissions, and that published articles exist.</p>
+      </div>
+    </div>
+  );
+
   return (
     <div className="bg-[#f8fafb] min-h-screen p-6 md:p-12">
       <ArticlesHero />
@@ -118,11 +207,37 @@ const Articles = () => {
               <X size={28} />
             </button>
           </div>
-          <iframe 
-            src={`${activePdf.url}#toolbar=0`} 
-            className="flex-1 w-full bg-white rounded-xl shadow-2xl border-none" 
-            title="PDF Preview"
-          />
+          {activePdf.url ? (
+            <Suspense fallback={<div className="flex-1 flex items-center justify-center text-white"><Loader2 className="animate-spin" /></div>}>
+              <DocumentReader
+                url={activePdf.url}
+                pageCount={pageCount}
+                currentPage={currentPage}
+                paid={paid}
+                articleId={activePdf.id}
+                title={activePdf.title}
+                path={activePdf.path}
+                onPageCount={setPageCount}
+                onPageChange={setCurrentPage}
+                onUnlock={requestPayment}
+              />
+            </Suspense>
+          ) : <div className="flex-1 flex items-center justify-center text-white"><Loader2 className="animate-spin" /></div>}
+        </div>
+      )}
+
+      {payment && (
+        <div className="fixed inset-0 z-[110] bg-emerald-950/80 flex items-center justify-center p-6">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl">
+            <h2 className="font-serif text-2xl text-emerald-950 mb-2">Unlock this document</h2>
+            <p className="text-slate-600 text-sm mb-6">Pay {import.meta.env.VITE_CAMPAY_ARTICLE_PRICE_XAF || 1000} XAF to read beyond page 20 and download your document.</p>
+            {!payment.referenceCode ? <>
+              <input value={payment.phone} onChange={(event) => setPayment({ ...payment, phone: event.target.value })} placeholder="Cameroon phone number" className="w-full border border-slate-200 rounded-lg px-4 py-3 mb-4" />
+              <button onClick={startPayment} className="w-full bg-emerald-950 text-yellow-500 py-3 rounded-lg font-bold">Pay to unlock your document</button>
+            </> : <p className="text-emerald-900 font-semibold">Approve the payment request on your phone. Checking payment status...</p>}
+            {payment.status && <p className="text-sm text-slate-500 mt-4">{payment.status}</p>}
+            <button onClick={() => setPayment(null)} className="w-full mt-4 text-slate-500 text-sm">Cancel</button>
+          </div>
         </div>
       )}
 
@@ -163,18 +278,12 @@ const Articles = () => {
         {/* ARTICLES GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filtered.map((article) => {
-            const publicUrl = getSupabaseUrl(article.pdf_path);
             const displayTitle = language === 'en' ? article.title.en : article.title.fr;
 
             return (
               <div key={article.id} className="bg-white rounded-[2rem] border border-slate-100 overflow-hidden flex flex-col hover:shadow-2xl transition-all duration-500 group">
                 <div className="h-72 bg-slate-50 relative overflow-hidden">
-                  {article.pdf_path && (
-                    <Preview 
-                      path={article.pdf_path} 
-                      onClick={() => setActivePdf({ url: publicUrl, title: displayTitle })} 
-                    />
-                  )}
+                  <Preview path={article.pdf_path} onClick={() => openDocument(article)} />
                 </div>
 
                 <div className="p-7 flex flex-col flex-1">
@@ -194,7 +303,7 @@ const Articles = () => {
                     
                     <div className="flex items-center gap-2">
                       <button 
-                        onClick={() => setActivePdf({ url: publicUrl, title: displayTitle })}
+                        onClick={() => openDocument(article)}
                         className="flex items-center gap-2 px-4 py-2 bg-emerald-950 text-yellow-500 rounded-xl text-xs font-black hover:bg-emerald-900 transition-all shadow-md active:scale-95"
                       >
                         <BookOpen size={14} />
